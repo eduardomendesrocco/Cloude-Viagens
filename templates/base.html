@@ -4,8 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cloude Viagens</title>
+
+
+    <link rel="stylesheet" href="{{ url_for('statisc', filename='css/style.css') }}">
 </head>
 <body>
+
+    <nav class="navbar bg-1 fg-2">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">
+            <img src="logo.png" alt="Logo" width="30" height="24" class="d-inline-block align-text-top">Cloude Viagens
+          </a>
+        </div>
+    </nav>
     
+
+    {% block conteudo %}
+
+    
+
+    {% endblock conteudo %}
+
+
 </body>
 </html>
