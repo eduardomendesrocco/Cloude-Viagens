@@ -27,7 +27,7 @@ def login():
         senha = request.form.get("senha")
 
         if not email or not senha:
-            flash("Preencha os dados necessários.", "danger")]
+            flash("Preencha os dados necessários.", "danger")
 
         return render_template("formularios.html")
     

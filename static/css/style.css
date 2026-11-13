@@ -1,0 +1,90 @@
+
+:root {
+    --sebun: #596070;
+    --cartilage: #757f99;
+    --substantia-crisea: #94a9be;
+    --lymphatic: #b2cddf;
+    --neutrofils: #c9d9e6;
+    --antibiotics: #eaf1f1;
+}
+
+body {
+    background-color: var(--antibiotics);
+    font-family: Arial, sans-serif;
+    color: var(--sebun);
+}
+
+/* Área principal */
+#login, #cadastrar, #recadastrar {
+    background-color: white;
+    width: 350px;
+    margin: 70px auto;
+    padding: 35px;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(89, 96, 112, 0.12);
+}
+
+/* Títulos */
+h2 {
+    color: var(--sebun);
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+/* Labels */
+label {
+    color: var(--cartilage);
+    font-size: 14px;
+    font-weight: bold;
+}
+
+/* Campos */
+input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 12px;
+    margin: 8px 0 18px;
+    border: 1px solid var(--neutrofils);
+    border-radius: 8px;
+    background-color: var(--antibiotics);
+    color: var(--sebun);
+    outline: none;
+    transition: 0.3s;
+}
+
+input:focus {
+    border-color: var(--substantia-crisea);
+    box-shadow: 0 0 0 3px rgba(148, 169, 190, 0.2);
+}
+
+/* Botões */
+button {
+    width: 100%;
+    padding: 12px;
+    background-color: var(--sebun);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    background-color: var(--cartilage);
+}
+
+/* Links */
+a {
+    display: inline-block;
+    margin-top: 12px;
+    color: var(--cartilage);
+    text-decoration: none;
+    font-size: 14px;
+}
+
+a:hover {
+    color: var(--sebun);
+    text-decoration: underline;
+}

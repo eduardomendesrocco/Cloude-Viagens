@@ -4,17 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cloude Viagens</title>
-
-
-    <link rel="stylesheet" href="{{ url_for('statisc', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdn-uicons.flaticon.com/4.0.0/uicons-regular-rounded/css/uicons-regular-rounded.css">
 </head>
 <body>
 
+    <header>
+      <a href="{{url_for('index')}}" id="logo">
+        <img src="{{url_for('static', filename='img/logo.png')}}" alt="">LOGO
+      </a>
+    </header>
+
     <nav class="navbar bg-1 fg-2">
         <div class="container-fluid">
-          <a class="navbar-brand" href="#">
-            <img src="logo.png" alt="Logo" width="30" height="24" class="d-inline-block align-text-top">Cloude Viagens
-          </a>
+          <a class="navbar-brand" href="{{url_for('login')}}"> login </a>
         </div>
     </nav>
     
