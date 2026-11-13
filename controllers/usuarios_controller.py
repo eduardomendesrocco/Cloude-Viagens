@@ -3,6 +3,9 @@ from models.data.data_manager import add_user, busca_user_email
 
 user_bp = Blueprint("usuarios", __name__, url_prefix="/usuarios")
 
+@user_bp.route('/')
+def home():
+    return render_template('index.html')
 
 @user_bp.route('cadastrar', methods=["GET", "POST"])
 def cadastrar():
@@ -38,4 +41,11 @@ def login():
         session["usuario_nome"] = user["nome"]
 
         flash("Login realizado com sucesso!", "success")
-    return render_template("formularios.html")
+    return redirect(url_for("usuarios.home"))
+
+@user_bp.route('logout')
+def logout():
+    session["usuario_id"] = None
+    session["usuario_nome"] = None
+
+    flash("Sucesso no Logout", "")

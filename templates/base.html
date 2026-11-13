@@ -6,6 +6,7 @@
     <title>Cloude Viagens</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link rel="stylesheet" href="https://cdn-uicons.flaticon.com/4.0.0/uicons-regular-rounded/css/uicons-regular-rounded.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" integrity="sha384-tViUnnbYAV00FLIhhi3v/dWt3Jxw4gZQcNoSCxCIFNJVCx7/D55/wXsrNIRANwdD" crossorigin="anonymous">
 </head>
 <body>
 
@@ -20,7 +21,20 @@
           <a class="navbar-brand" href="{{url_for('login')}}"> login </a>
         </div>
     </nav>
-    
+
+    {% with msg = get_flashed_messages( ) %}
+      {% if msg %}
+        <ul class="list-unstyled">
+          {% for message in msg %}
+            <li class="alert alert-{{ cor }} alert-dissmisable fade show" role="alert">
+              <i class="bi bi-exclamation-diamond"></i>
+              {{message}}
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}    
 
     {% block conteudo %}
 
