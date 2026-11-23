@@ -7,23 +7,22 @@ user_bp = Blueprint("usuarios", __name__, url_prefix="/usuarios")
 def home():
     return render_template('index.html')
 
-@user_bp.route('cadastrar', methods=["GET", "POST"])
+@user_bp.route('/cadastrar', methods=["GET", "POST"])
 def cadastrar():
     if request.method == "POST":
         res = add_user(request.form)
 
         if res:
             flash("Usuário cadastrado com sucesso!", "success")
-
-        return redirect(url_for("usuarios.login"))
+            return redirect(url_for("usuarios.login"))
     
-    flash("Preencha todos os dados necessários.", "danger")
+        flash("Preencha todos os dados necessários.", "danger")
 
     return render_template("formularios.html")
 
 
 
-@user_bp.route('login', methods=["GET", "POST"])
+@user_bp.route('/login', methods=["GET", "POST"])
 def login():
     if request.method == "POST":
         email = request.form.get("email")
@@ -31,21 +30,24 @@ def login():
 
         if not email or not senha:
             flash("Preencha os dados necessários.", "danger")
-
-        return render_template("formularios.html")
+            return render_template("formularios.html")
     
-    user = busca_user_email(email)
+        user = busca_user_email(email)
 
-    if user and senha == user["senha"]:
-        session["usuario_id"] = user["id"]
-        session["usuario_nome"] = user["nome"]
+        if user and senha == user["senha"]:
+            session["usuario_id"] = user["id"]
+            session["usuario_nome"] = user["nome"]
 
-        flash("Login realizado com sucesso!", "success")
-    return redirect(url_for("usuarios.home"))
+            flash("Login realizado com sucesso!", "success")
+            return redirect(url_for("usuarios.home"))
+        flash("Email ou senha incorretos, tente novamente.", "danger")
+    return render_template("formularios.html")
 
-@user_bp.route('logout')
+@user_bp.route('/logout')
 def logout():
     session["usuario_id"] = None
     session["usuario_nome"] = None
 
-    flash("Sucesso no Logout", "")
+
+    flash("Sucesso no Logout", "success")
+    return redirect(url_for("usuarios.login"))

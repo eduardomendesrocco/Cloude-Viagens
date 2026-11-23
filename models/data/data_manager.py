@@ -1,10 +1,41 @@
 import json
 import os
-from config import VIAGENS_DATA_FILE, USERS_DATA_FILE, BASE_DIR
+from config import VIAGENS_DATA_FILE, USERS_DATA_FILE
 
 
 ### CRUD DE VIAGENS
 
+def busca_viagem_id(viagem_id):
+    VIAGENS = load_data_VIAGENS()
+    return next((viagem for viagem in VIAGENS if viagem["id"] == viagem_id), None)
+
+def recupera_viagens_user(user_id):
+    VIAGENS = load_data_VIAGENS()
+    return [viagem for viagem in VIAGENS if viagem.get("user_id") == user_id]
+
+def update_viagem(viagem_id, form_data):
+    VIAGENS = load_data_VIAGENS()
+    for viagem in VIAGENS:
+        if viagem["id"] == viagem_id:
+            viagem["local_atual"] = form_data.get("atual") or viagem["local_atual"]
+            viagem["local_destino"] = form_data.get("destino") or viagem["local_destino"]
+            viagem["dia_de_ida"] = form_data.get("ida") or viagem["dia_de_ida"]
+            viagem["dia_de_volta"] = form_data.get("volta") or viagem["dia_de_volta"]
+            viagem["observacoes"] = form_data.get("obs") or viagem["observacoes"]
+            save_data_VIAGENS(VIAGENS)
+            return True
+    return False
+
+def delete_viagem(viagem_id):
+    VIAGENS = load_data_VIAGENS()
+    novas = [viagem for viagem in VIAGENS if viagem["id"] != viagem_id]
+
+    if len(novas) == len(VIAGENS):
+        return False
+        # Não achou nenhuma com o id informado
+
+    save_data_VIAGENS(novas)
+    return True
 
 def load_data_VIAGENS():
     if not os.path.exists(VIAGENS_DATA_FILE):
@@ -40,6 +71,7 @@ def add_viagem(form_data, user_id):
 
     # Monta a viagem para ser adicionada ao JSON
     new_trip = {"id": new_id_viagem, 
+                "user_id": user_id,
                 "local_atual": atual, 
                 "local_destino": destino, 
                 "dia_de_ida": dia_ida, 
@@ -80,6 +112,8 @@ def add_user(form_data):
     if not nome or not mail or not password:
         return False
 
+    if busca_user_email(mail):
+        return False
     new_id_user = max([user['id'] for user in USERS], default=0) + 1
 
     new_user = {"id": new_id_user, 
@@ -91,8 +125,36 @@ def add_user(form_data):
     # Adiciona o novo usuário ao JSON
     USERS.append(new_user)
     save_data_USERS(USERS)
+    return True
 
 def busca_user_email(email):
-    USERS = load_data_USERS
+    USERS = load_data_USERS()
 
     return next((user for user in USERS if user["email"].lower() == email.lower()), None)
+
+def busca_user_id(user_id):
+    USERS = load_data_USERS()
+    return next((u for u in USERS if u["id"] == user_id), None)
+
+def update_user(user_id, form_data):
+    USERS = load_data_USERS()
+
+    for user in USERS:
+        if user["id"] == user_id:
+            user["nome"] = form_data.get("nome") or user["nome"]
+            user["email"] = form_data.get("email") or user["email"]
+            user["senha"] = form_data.get("senha") or user["senha"]
+            save_data_USERS(USERS)
+            return True
+
+    return False
+
+def delete_user(user_id):
+    USERS = load_data_USERS()
+    novos = [u for u in USERS if u["id"] != user_id]
+
+    if len(novos) == len(USERS):
+        return False
+
+    save_data_USERS(novos)
+    return True
