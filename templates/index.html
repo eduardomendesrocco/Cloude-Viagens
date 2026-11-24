@@ -1,4 +1,26 @@
-{% extends base.html %}
+{% extends "base.html" %}
 {% block conteudo %}
+    <h1>
+        Previsão do tempo
+    </h1>
+
+    <form method="GET" action="{{ url_for('clima.home') }}">
+        <input type="text" name="cidade" placeholder="Digite uma cidade" value="{{ cidade }}" required>
+        <button type="submit">Buscar</button>
+    </form>
+
+    {% if cidade and not previsao %}
+        <p>Cidade não encontrada</p>
+    {% endif %}
+
+    {% if previsao %}
+        <h2>{{ previsao.cidade }}, {{ previsao.pais }}</h2>
+        <ul>
+            {% for dia in previsao.dias %}
+                <li><img src="{{ url_for('static', filename='image/' + dia.imagem) }}" alt="" width="40">
+    {{ dia.data }}: máx {{ dia.maxima }}°C / mín {{ dia.minima }}°C</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
 
 {% endblock conteudo %}

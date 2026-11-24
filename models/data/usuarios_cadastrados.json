@@ -1,1 +1,8 @@
-[]
+[
+    {
+        "id": 1,
+        "nome": "dudu",
+        "email": "dudu@gmail.com",
+        "senha": "minecraft"
+    }
+]

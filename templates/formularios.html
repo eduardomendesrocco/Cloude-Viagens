@@ -7,7 +7,7 @@
 
         <h2>Entrar</h2>
 
-        <form action="{{ url_for('login') }}" method="POST">
+        <form action="{{ url_for('usuarios.login') }}" method="POST">
             <label for="email-login"><i class="fi fi-rr-envelope"></i> E-mail: </label><br>
             <input type="email" id="email-login" name="email" placeholder="ex: ana@gmail.com" required autocomplete="email"><br>
             <label for="senha-login"> <i class="fi fi-rr-lock"></i> Senha:</label><br>
@@ -23,7 +23,7 @@
 
         <h2>Cadastrar</h2>
 
-        <form action="{{ url_for('cadastrar') }}" method="POST">
+        <form action="{{ url_for('usuarios.cadastrar') }}" method="POST">
             <label for="nome"><i class="fi fi-rr-user"></i> Nome: </label><br>
             <input type="text" id="nome" name="nome" placeholder="ex: ana" required><br>
 
@@ -42,7 +42,7 @@
 
     <script>
         function mostrarTela(telaEscolhida) {
-            const telas = ['login', 'cadastrar', 'recadastrar'];
+            const telas = ['login', 'cadastrar'];
 
             telas.forEach(function(tela) {
                 document.getElementById(tela).hidden =

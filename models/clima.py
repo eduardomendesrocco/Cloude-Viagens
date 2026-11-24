@@ -31,7 +31,8 @@ def buscar_previsao(cidade, dias=5):
             "data": diario["time"][i],
             "maxima": diario["temperature_2m_max"][i],
             "minima": diario["temperature_2m_min"][i],
-            "codigo": diario["weather_code"][i]
+            "codigo": diario["weather_code"][i],
+            "imagem": escolha_img(diario["weather_code"][i])
         })
 
     return {
@@ -39,6 +40,18 @@ def buscar_previsao(cidade, dias=5):
         "pais": local.get("country", ""),
         "dias": previsao
     }
+
+def escolha_img(number):
+    if number == 0:
+        return "sol.png"
+    if number in (1, 2):
+        return "nuvem_branca.png"
+    if number in (51, 53, 55, 61, 63, 65, 80, 81, 82):
+        return "chuva.png"
+    if number in (95, 96, 99):
+        return "tempestade.png"
+    else:
+        return "nuvem_cinza.png"
 
 if __name__ == "__main__":
     print(buscar_previsao("Araraquara"))

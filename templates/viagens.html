@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block conteudo %}
+
+    <h2>Nova viagem</h2>
+
+    <form method="POST">
+        <input type="text" name="atual" placeholder="Local atual" required><br>
+        <input type="text" name="destino" placeholder="Destino" required><br>
+        <input type="date" name="ida" required><br>
+        <input type="date" name="volta" required><br>
+        <textarea name="obs" placeholder="Observações"></textarea><br>
+        <button type="submit">Salvar</button>
+    </form>
+
+
+    <h2>Minhas viagens</h2>
+    {% for viagem in viagens %}
+        <p>{{ viagem.local_atual }} → {{ viagem.local_destino }} ({{ viagem.dia_de_ida }} a {{ viagem.dia_de_volta }})</p>
+        
+        <a href="{{ url_for('viagens.editar', viagem_id=viagem.id) }}">Editar</a>
+        <form method="POST" action="{{ url_for('viagens.deletar', viagem_id=viagem.id) }}">
+            <button type="submit">Apagar</button>
+        </form>
+    {% endfor %}
+
+{% endblock conteudo %}

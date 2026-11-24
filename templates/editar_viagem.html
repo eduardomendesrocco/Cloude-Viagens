@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block conteudo %}
+
+    <h2>Editar viagem</h2>
+
+    <form method="POST">
+        <input type="text" name="atual" value="{{ viagem.local_atual }}" required><br>
+        <input type="text" name="destino" value="{{ viagem.local_destino }}" required><br>
+        <input type="date" name="ida" value="{{ viagem.dia_de_ida }}" required><br>
+        <input type="date" name="volta" value="{{ viagem.dia_de_volta }}" required><br>
+        <textarea name="obs">{{ viagem.observacoes }}</textarea><br>
+        <button type="submit">Salvar alterações</button>
+    </form>
+
+    <a href="{{ url_for('viagens.viagens') }}">Cancelar</a>
+
+{% endblock conteudo %}
