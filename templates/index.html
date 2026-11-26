@@ -18,7 +18,7 @@
         <ul>
             {% for dia in previsao.dias %}
                 <li><img src="{{ url_for('static', filename='image/' + dia.imagem) }}" alt="" width="40">
-    {{ dia.data }}: máx {{ dia.maxima }}°C / mín {{ dia.minima }}°C</li>
+    {{ dia.data }} <br>Máx {{ dia.maxima }}°C <br>Mín {{ dia.minima }}°C</li>
             {% endfor %}
         </ul>
     {% endif %}

@@ -1,91 +1,428 @@
+/* ==========================================================
+   Cloude Viagens - tema "céu" (vidro translúcido)
+   Segue o layout da página inicial, sem mudar nenhum HTML.
+   ========================================================== */
+
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
 
 :root {
-    --sebun: #596070;
-    --cartilage: #757f99;
-    --substantia-crisea: #94a9be;
-    --lymphatic: #b2cddf;
-    --neutrofils: #c9d9e6;
-    --antibiotics: #eaf1f1;
+    /* #b5ced9 com 74% de transparência (= 26% de opacidade).
+       Quer o vidro mais forte? troque .26 por .74 */
+    --vidro: rgba(181, 206, 217, 0.26);
+    --vidro-borda: rgba(255, 255, 255, 0.45);
+    --branco: #ffffff;
+    --azul: #1e5a8a;
+    --sombra-texto: 0 1px 8px rgba(18, 62, 110, 0.45);
+    --sombra: 0 10px 30px rgba(30, 80, 140, 0.18);
+
+    /* Para usar uma foto de céu no fundo, salve em static/image/ceu.jpg
+       e troque a linha abaixo por:
+       --foto-ceu: url("../image/ceu.jpg") center / cover; */
 }
 
+html { background: #ddecfd; }
+
+/* ---------- Moldura do céu + grade da página ---------- */
 body {
-    background-color: var(--antibiotics);
-    font-family: Arial, sans-serif;
-    color: var(--sebun);
+    display: grid;
+    grid-template-columns: 1.15fr repeat(4, 1fr);
+    column-gap: 18px;
+    align-content: start;
+    width: min(1280px, calc(100% - 32px));
+    min-height: calc(100vh - 48px);
+    margin: 24px auto;
+    padding: 26px 30px 48px;
+    border-radius: 28px;
+    font-family: "Poppins", "Segoe UI", system-ui, Arial, sans-serif;
+    color: var(--branco);
+    text-shadow: var(--sombra-texto);
+    background:
+        var(--foto-ceu, linear-gradient(transparent, transparent)),
+        radial-gradient(circle at 90% 12%, #fff 0, rgba(255,255,255,.85) 3%, rgba(255,255,255,0) 22%),
+        radial-gradient(ellipse 38% 16% at 12% 100%, rgba(255,255,255,.95), rgba(255,255,255,0) 72%),
+        radial-gradient(ellipse 34% 18% at 40% 104%, rgba(255,255,255,.95), rgba(255,255,255,0) 70%),
+        radial-gradient(ellipse 40% 20% at 72% 100%, rgba(255,255,255,.98), rgba(255,255,255,0) 70%),
+        radial-gradient(ellipse 30% 14% at 98% 92%, rgba(255,255,255,.9), rgba(255,255,255,0) 70%),
+        radial-gradient(ellipse 36% 12% at 20% 64%, rgba(255,255,255,.5), rgba(255,255,255,0) 70%),
+        radial-gradient(ellipse 30% 12% at 80% 60%, rgba(255,255,255,.55), rgba(255,255,255,0) 70%),
+        linear-gradient(165deg, #1b5aa8 0%, #4a8fd0 28%, #8fc0e8 55%, #cfe5f5 80%, #e8f2fa 100%);
 }
 
-/* Área principal */
-#login, #cadastrar, #recadastrar {
-    background-color: white;
-    width: 350px;
-    margin: 70px auto;
-    padding: 35px;
-    border-radius: 15px;
-    box-shadow: 0 5px 20px rgba(89, 96, 112, 0.12);
+/* tudo ocupa a linha inteira, exceto o que o layout posiciona */
+body > * { grid-column: 1 / -1; min-width: 0; }
+
+/* efeito de vidro (usado em vários blocos) */
+body::before, body:has(> ul)::after,
+body > form[action="/"], body > form:not([action]),
+#login, #cadastrar, body > p, .alert, body > ul li {
+    background: var(--vidro);
+    border: 1px solid var(--vidro-borda);
+    -webkit-backdrop-filter: blur(14px) brightness(0.93);
+    backdrop-filter: blur(14px) brightness(0.93);
+    box-shadow: var(--sombra);
 }
 
-/* Títulos */
-h2 {
-    color: var(--sebun);
-    text-align: center;
-    margin-bottom: 30px;
+/* ---------- Barra do topo: LOGO ........ LOGIN ---------- */
+body::before {
+    content: "";
+    grid-area: 1 / 1 / 2 / -1;
+    border-radius: 999px;
 }
 
-/* Labels */
-label {
-    color: var(--cartilage);
-    font-size: 14px;
-    font-weight: bold;
+header {
+    grid-area: 1 / 1 / 2 / 2;
+    align-self: center;
+    z-index: 1;
+    padding: 30px 34px;
 }
 
-/* Campos */
-input {
-    width: 100%;
-    box-sizing: border-box;
-    padding: 12px;
-    margin: 8px 0 18px;
-    border: 1px solid var(--neutrofils);
-    border-radius: 8px;
-    background-color: var(--antibiotics);
-    color: var(--sebun);
-    outline: none;
-    transition: 0.3s;
-}
-
-input:focus {
-    border-color: var(--substantia-crisea);
-    box-shadow: 0 0 0 3px rgba(148, 169, 190, 0.2);
-}
-
-/* Botões */
-button {
-    width: 100%;
-    padding: 12px;
-    background-color: var(--sebun);
-    color: white;
-    border: none;
-    border-radius: 8px;
-    font-size: 15px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-button:hover {
-    background-color: var(--cartilage);
-}
-
-/* Links */
-a {
-    display: inline-block;
-    margin-top: 12px;
-    color: var(--cartilage);
+#logo {
+    color: var(--branco);
+    font-size: 17px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
     text-decoration: none;
-    font-size: 14px;
 }
 
-a:hover {
-    color: var(--sebun);
+nav.navbar {
+    grid-area: 1 / 2 / 2 / -1;
+    justify-self: end;
+    align-self: center;
+    z-index: 1;
+    padding: 0 34px;
+    background: none;
+    box-shadow: none;
+}
+
+nav.navbar .container-fluid { gap: 22px; padding: 0; }
+
+nav.navbar a {
+    margin: 0;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--branco);
+    text-decoration: none;
+}
+
+nav.navbar a:hover { opacity: 0.8; }
+
+nav.navbar a:last-child::after {
+    content: "";
+    width: 26px;
+    height: 26px;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m22 2-7 20-4-9-9-4Z'/%3E%3Cpath d='M22 2 11 13'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+
+/* ---------- Mensagens ---------- */
+.alert {
+    justify-self: center;
+    width: min(100%, 640px);
+    margin: 18px 0 0;
+    color: var(--branco);
+    border-radius: 20px;
+}
+
+/* ---------- Título e busca ---------- */
+h1 {
+    grid-row: 3;
+    margin: 30px 0 0;
+    text-align: center;
+    font-size: 26px;
+    font-weight: 600;
+}
+
+body > form[action="/"] {
+    grid-row: 4;
+    justify-self: center;
+    display: flex;
+    align-items: center;
+    width: min(100%, 640px);
+    margin: 22px 0 34px;
+    padding: 6px 8px 6px 28px;
+    border-radius: 999px;
+}
+
+body > form[action="/"] input {
+    flex: 1;
+    margin: 0;
+    padding: 14px 0;
+    font-size: 21px;
+    text-align: center;
+    color: var(--branco);
+    background: none;
+    border: none;
+    box-shadow: none;
+    text-shadow: var(--sombra-texto);
+}
+
+body > form[action="/"] input::placeholder { color: rgba(255,255,255,.95); }
+
+/* botão "Buscar" vira lupa */
+body > form[action="/"] button {
+    width: 52px;
+    height: 52px;
+    padding: 0;
+    font-size: 0;
+    color: transparent;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='m21 21-4.3-4.3'/%3E%3C/svg%3E") center / 26px no-repeat;
+    border: none;
+    box-shadow: none;
+}
+
+body > form[action="/"] button:hover { transform: scale(1.1); background-color: transparent; }
+
+/* "Cidade não encontrada" */
+body > p:not(:has(+ a)) {
+    grid-row: 5;
+    justify-self: center;
+    margin: 0;
+    padding: 14px 34px;
+    font-weight: 500;
+    border-radius: 999px;
+}
+
+/* ---------- Previsão: cartão grande + 4 cartões ---------- */
+body:has(> ul)::after { content: ""; border-radius: 40px; }
+
+body > h2:has(+ ul) {
+    z-index: 1;
+    margin: 0;
+    padding: 34px 20px 0;
+    text-align: center;
+    font-size: 22px;
+    font-weight: 700;
+}
+
+body > ul { display: contents; }
+
+body > ul li {
+    display: block;
+    list-style: none;
+    text-align: center;
+    font-weight: 600;
+    line-height: 1.55;
+}
+
+body > ul li img { display: block; margin: 0 auto 10px; object-fit: contain; }
+
+/* dia de hoje = cartão grande, dentro do painel da esquerda */
+body > ul li:first-child {
+    z-index: 1;
+    padding: 6px 22px 38px;
+    font-size: 19px;
+    font-weight: 700;
+    background: none;
+    border: none;
+    box-shadow: none;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+}
+
+body > ul li:first-child img { width: 110px; height: 110px; margin: 10px auto 18px; }
+
+/* demais dias = cartões pequenos */
+body > ul li:nth-child(n+2) {
+    align-self: start;
+    min-height: 168px;
+    padding: 18px 10px 14px;
+    font-size: 13px;
+    border-radius: 34px;
+}
+
+body > ul li:nth-child(n+2) img { width: 58px; height: 58px; }
+
+body > ul::before {
+    content: "temperaturas semanais";
+    grid-column: 1 / -1;
+    align-self: end;
+    padding-bottom: 18px;
+    text-align: center;
+    font-size: 26px;
+    font-weight: 700;
+}
+
+@media (min-width: 861px) {
+    body:has(> ul)::after { grid-area: 5 / 1 / 7 / 2; }
+    body > h2:has(+ ul) { grid-area: 5 / 1 / 6 / 2; }
+    body > ul li:first-child { grid-area: 6 / 1 / 7 / 2; }
+
+    body > ul::before { grid-area: 5 / 2 / 6 / -1; margin-top: 40px; }
+    body > ul li:nth-child(2) { grid-area: 6 / 2; }
+    body > ul li:nth-child(3) { grid-area: 6 / 3; }
+    body > ul li:nth-child(4) { grid-area: 6 / 4; }
+    body > ul li:nth-child(5) { grid-area: 6 / 5; }
+}
+
+/* ---------- Formulários (login, cadastro, viagens) ---------- */
+form br { display: none; }
+
+label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+}
+
+input, textarea {
+    display: block;
+    width: 100%;
+    margin: 6px 0 18px;
+    padding: 13px 16px;
+    font: inherit;
+    font-size: 15px;
+    color: var(--branco);
+    text-shadow: var(--sombra-texto);
+    background: rgba(255, 255, 255, 0.28);
+    border: 1px solid rgba(255, 255, 255, 0.55);
+    border-radius: 14px;
+    outline: none;
+    transition: 0.15s;
+}
+
+input::placeholder, textarea::placeholder { color: rgba(255, 255, 255, 0.85); }
+textarea { min-height: 100px; resize: vertical; }
+
+input:focus, textarea:focus {
+    background: rgba(255, 255, 255, 0.4);
+    border-color: var(--branco);
+    box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.25);
+}
+
+button:not(.btn-close) {
+    padding: 13px 26px;
+    font: inherit;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--azul);
+    text-shadow: none;
+    background: rgba(255, 255, 255, 0.9);
+    border: none;
+    border-radius: 999px;
+    box-shadow: 0 4px 14px rgba(30, 80, 140, 0.2);
+    cursor: pointer;
+    transition: 0.15s;
+}
+
+button:not(.btn-close):hover { background: var(--branco); transform: translateY(-1px); }
+
+/* Login e cadastro */
+#login, #cadastrar {
+    justify-self: center;
+    width: min(100%, 430px);
+    margin: 56px 0;
+    padding: 40px 36px;
+    border-radius: 36px;
+}
+
+#login h2, #cadastrar h2 { margin: 0 0 26px; text-align: center; font-size: 26px; font-weight: 700; }
+#login button, #cadastrar button { width: 100%; margin-top: 4px; }
+#login a, #cadastrar a {
+    display: block;
+    margin-top: 22px;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--branco);
     text-decoration: underline;
 }
 
+/* Nova viagem / editar */
+body > h2:not(:has(+ ul)) { margin: 44px 0 20px; text-align: center; font-size: 26px; font-weight: 700; }
+
+body > form:not([action]) {
+    justify-self: center;
+    width: min(100%, 600px);
+    padding: 34px;
+    border-radius: 36px;
+}
+
+body > form:not([action]) button { width: 100%; margin-top: 4px; }
+
+body > form:not([action]) + a {
+    justify-self: center;
+    margin-top: 20px;
+    padding: 9px 28px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--azul);
+    text-shadow: none;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 999px;
+    text-decoration: none;
+}
+
+/* ---------- Minhas viagens: cartões ---------- */
+body > p:has(+ a) {
+    margin: 0 0 14px;
+    padding: 22px 28px 74px;
+    font-size: 17px;
+    font-weight: 600;
+    border-radius: 26px;
+}
+
+/* Editar e Apagar ficam dentro do cartão */
+body > p + a, body > form[action*="deletar"] {
+    grid-column: 1;
+    justify-self: start;
+    align-self: start;
+    position: relative;
+    z-index: 2;
+    margin-top: -58px;
+    margin-bottom: 0;
+}
+
+body > p + a {
+    width: 84px;
+    margin-left: 28px;
+    padding: 8px 0;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 20px;
+    color: var(--azul);
+    text-shadow: none;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 999px;
+    text-decoration: none;
+}
+
+body > p + a:hover { background: var(--branco); }
+
+body > form[action*="deletar"] { margin-left: 120px; }
+
+body > form[action*="deletar"] button {
+    display: block;
+    padding: 8px 20px;
+    font-size: 14px;
+    line-height: 20px;
+    color: #b42318;
+    background: rgba(254, 226, 226, 0.92);
+    box-shadow: none;
+}
+
+/* ---------- Celular / telas estreitas ---------- */
+@media (max-width: 860px) {
+    body { grid-template-columns: 1fr 1fr; padding: 18px 16px 40px; }
+
+    header { padding: 22px 20px; }
+    nav.navbar { padding: 0 20px; }
+
+    body:has(> ul)::after { grid-area: 5 / 1 / 7 / 3; }
+    body > h2:has(+ ul) { grid-area: 5 / 1 / 6 / 3; }
+    body > ul li:first-child { grid-area: 6 / 1 / 7 / 3; }
+
+    body > ul::before { grid-area: 7 / 1 / 8 / 3; margin-top: 30px; }
+    body > ul li:nth-child(2) { grid-area: 8 / 1; }
+    body > ul li:nth-child(3) { grid-area: 8 / 2; }
+    body > ul li:nth-child(4) { grid-area: 9 / 1; margin-top: 14px; }
+    body > ul li:nth-child(5) { grid-area: 9 / 2; margin-top: 14px; }
+
+    body > form[action="/"] input { font-size: 17px; }
+}
