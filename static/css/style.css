@@ -6,8 +6,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
 
 :root {
-    /* #b5ced9 com 74% de transparência (= 26% de opacidade).
-       Quer o vidro mais forte? troque .26 por .74 */
     --vidro: rgba(181, 206, 217, 0.26);
     --vidro-borda: rgba(255, 255, 255, 0.45);
     --branco: #ffffff;
@@ -15,9 +13,7 @@
     --sombra-texto: 0 1px 8px rgba(18, 62, 110, 0.45);
     --sombra: 0 10px 30px rgba(30, 80, 140, 0.18);
 
-    /* Para usar uma foto de céu no fundo, salve em static/image/ceu.jpg
-       e troque a linha abaixo por:
-       --foto-ceu: url("../image/ceu.jpg") center / cover; */
+    --foto-ceu: url("../image/ceu.jpg") center / cover;
 }
 
 html { background: #ddecfd; }
@@ -37,7 +33,7 @@ body {
     color: var(--branco);
     text-shadow: var(--sombra-texto);
     background:
-        var(--foto-ceu, linear-gradient(transparent, transparent)),
+        var(--foto-ceu),
         radial-gradient(circle at 90% 12%, #fff 0, rgba(255,255,255,.85) 3%, rgba(255,255,255,0) 22%),
         radial-gradient(ellipse 38% 16% at 12% 100%, rgba(255,255,255,.95), rgba(255,255,255,0) 72%),
         radial-gradient(ellipse 34% 18% at 40% 104%, rgba(255,255,255,.95), rgba(255,255,255,0) 70%),
